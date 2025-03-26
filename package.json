@@ -1,0 +1,38 @@
+{
+  "name": "soundboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "build:vue": "vite build",
+    "build:electron": "electron-builder",
+    "build": "npm run build:vue && npm run build:electron"
+  },
+  "dependencies": {
+    "csv-parse": "^5.6.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "concurrently": "^9.1.2",
+    "electron": "^35.1.0",
+    "electron-builder": "^26.0.12",
+    "vite": "^6.2.0",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.yourcompany.soundboard",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "electron/bin/nircmd.exe"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
+  }
+}
