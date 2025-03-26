@@ -1,68 +1,81 @@
-<template>
-    <div class="sound-button">
-      <button @click="activate">🔊 Activate Soundboard</button>
-      <button @click="playSound">▶ Play Sound</button>
-      <button @click="restore">🔙 Restore Audio</button>
-      <audio ref="audio" src="/sound.mp3" preload="auto" />
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue'
-  
-  const audio = ref(null)
-  
-  async function activate() {
-    if (!window.audioAPI) {
-      console.error('audioAPI missing')
-      return
-    }
-    try {
+<script setup>
+import { ref } from 'vue'
+
+const isActive = ref(false)
+const busy = ref(false)
+
+function playSound() {
+  const audio = new Audio('/sound.mp3')
+  audio.play().catch(console.error)
+}
+
+async function toggleSoundboard() {
+  busy.value = true
+  try {
+    if (isActive.value) {
       await window.audioAPI.activate()
-      console.log('✅ Soundboard activated')
-    } catch (e) {
-      console.error('Failed to activate soundboard:', e)
-    }
-  }
-  
-  function playSound() {
-    if (!audio.value) return
-    audio.value.currentTime = 0
-    audio.value.play().catch(err => console.error('Play error:', err))
-  }
-  
-  async function restore() {
-    if (!window.audioAPI) {
-      console.error('audioAPI missing')
-      return
-    }
-    try {
+      console.log('✅ Activated')
+    } else {
       await window.audioAPI.restore()
-      console.log('✅ Audio devices restored')
-    } catch (e) {
-      console.error('Failed to restore audio:', e)
+      console.log('✅ Restored')
     }
+  } catch (err) {
+    console.error('Toggle error:', err)
+  } finally {
+    busy.value = false
   }
-  
-  onMounted(() => {
-    console.log('Bridge exists?', !!window.audioAPI)
-  })
-  </script>
-  
-  <style scoped>
-  .sound-button {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 2rem;
-  }
-  button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  </style>
-  
+}
+</script>
+
+<template>
+  <label class="switch">
+    <input 
+      type="checkbox" 
+      v-model="isActive" 
+      @change="toggleSoundboard" 
+      :disabled="busy" 
+    />
+    <span class="slider"></span>
+  </label>
+  <button @click="playSound">▶ Play Sound</button>
+</template>
+
+
+<style scoped>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+.switch input { display: none; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .3s;
+  border-radius: 6px;  /* slight rounding */
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 4px;  /* squareish knob */
+}
+
+input:checked + .slider {
+  background-color: #2196F3;  /* blue */
+}
+
+input:checked + .slider::before {
+  transform: translateX(22px);
+}
+</style>

@@ -1,6 +1,10 @@
 const { contextBridge, ipcRenderer } = require('electron')
+let previousState = null
 
 contextBridge.exposeInMainWorld('audioAPI', {
-  activate: () => ipcRenderer.invoke('soundboard:activate'),
-  restore: (previous) => ipcRenderer.invoke('soundboard:restore', previous)
+  activate: async () => {
+    previousState = await ipcRenderer.invoke('soundboard:activate')
+    return previousState
+  },
+  restore: () => ipcRenderer.invoke('soundboard:restore', previousState)
 })
