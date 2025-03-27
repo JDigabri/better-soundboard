@@ -4,10 +4,6 @@ import { ref } from 'vue'
 const isActive = ref(false)
 const busy = ref(false)
 
-function playSound() {
-  const audio = new Audio('/sound.mp3')
-  audio.play().catch(console.error)
-}
 
 async function toggleSoundboard() {
   busy.value = true
@@ -25,6 +21,7 @@ async function toggleSoundboard() {
     busy.value = false
   }
 }
+
 </script>
 
 <template>
@@ -37,7 +34,6 @@ async function toggleSoundboard() {
     />
     <span class="slider"></span>
   </label>
-  <button @click="playSound">▶ Play Sound</button>
 </template>
 
 

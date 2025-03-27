@@ -11,76 +11,30 @@ const CSV = path.join(__dirname, "bin", "devices.csv");
 
 let previousState = null;
 
-export async function activateSoundboard() {
-  execFileSync(SVV, ["/scomma", CSV, "/NoWindow"]);
+export function activateSoundboard() {
+  execFileSync(SVV, ["/scomma", CSV]);
+  const rows = parse(fs.readFileSync(CSV, "utf8"), { columns: true, skip_empty_lines: true });
 
-  await new Promise((resolve) => setTimeout(resolve, 200));
+  const defaultMic = rows.find(r => r.Default === "Capture")["﻿Name"];
+  const vbMic      = rows.find(r => r["Device Name"].includes("VB-Audio Virtual Cable") && r.Direction === "Capture")["﻿Name"];
 
-  const rows = parse(fs.readFileSync(CSV, "utf8"), {
-    columns: true,
-    skip_empty_lines: true,
-  });
-  console.log(
-    "Loaded devices:",
-    rows.map(
-      (r) => `${r["Device Name"]} (${r.Direction}, Default=${r.Default})`
-    )
-  );
+  // 1️⃣ Route physical mic into VB‑Cable
+  execFileSync(SVV, ["/SetListenToThisDevice", defaultMic, "1"]);
 
-  const defaultMicRow = rows.find((r) => r.Default === "Capture");
-  const vbMicRow = rows.find(
-    (r) =>
-      r["Device Name"].includes("VB-Audio Virtual Cable") &&
-      r.Direction === "Capture"
-  );
+  // 2️⃣ Make VB‑Cable your default mic
+  execFileSync(SVV, ["/SetDefault", vbMic, "all"]);
 
-  if (!defaultMicRow || !vbMicRow)
-    throw new Error("Cannot find default or VB‑Cable mic");
-
-  var defaultMic = defaultMicRow["﻿Name"];
-  var vbMic = vbMicRow["﻿Name"];
-  console.log(`Switching mic: "${defaultMic}" → "${vbMic}"`);
-  execFileSync(SVV, ["/SetDefault", vbMic, "all", "/NoWindow"]);
-
-  const defaultOutRow = rows.find((r) => r.Default === "Render");
-  const vbOutRow = rows.find(
-    (r) =>
-      r["Device Name"].includes("VB-Audio Virtual Cable") &&
-      r.Direction === "Render"
-  );
-
-  if (!defaultOutRow || !vbOutRow)
-    throw new Error("Cannot find default or VB‑Cable output");
-
-  var defaultOut = defaultOutRow["﻿Name"];
-  var vbOut = vbOutRow["﻿Name"];
-  console.log(`Switching output: "${defaultOut}" → "${vbOut}"`);
-  execFileSync(SVV, ["/SetDefault", vbOut, "all", "/NoWindow"]);
-
-  previousState = { previousMic: defaultMic, previousOut: defaultOut };
+  previousState = { previousMic: defaultMic };
   return previousState;
 }
 
 export function restoreSoundboard(prev) {
-    console.log("restoreSoundboard called with:", prev);
-    const { previousMic, previousOut } = prev || {};
-  
-    if (previousMic) {
-      console.log(`Restoring mic default → "${previousMic}"`);
-      execFileSync(SVV, ["/SetDefault", previousMic, "all", "/NoWindow"]); // 2 = Communications default
-      console.log("Mic restored successfully");
-    } else {
-      console.log("No previousMic to restore");
-    }
-  
-    if (previousOut) {
-      console.log(`Restoring output default → "${previousOut}"`);
-      execFileSync(SVV, ["/SetDefault", previousOut, "all", "/NoWindow"]); // all covers Console+Multimedia+Communications
-      console.log("Output restored successfully");
-    } else {
-      console.log("No previousOut to restore");
-    }
-  
-    return { previousMic, previousOut };
+  const mic = prev?.previousMic;
+  if (mic) {
+    // Disable mic → VB‑Cable routing
+    execFileSync(SVV, ["/SetListenToThisDevice", mic, "0"]);
+    // Restore your original mic as default
+    execFileSync(SVV, ["/SetDefault", mic, "all"]);
   }
-  
+  return prev;
+}
