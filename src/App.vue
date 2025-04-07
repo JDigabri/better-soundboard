@@ -1,34 +1,156 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import HomeView from './views/HomeView.vue'
-</script>
-
 <template>
-  <!--
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  
+  </head>
+  <TopFrame />
+  <div id="app" >
+    <div class="container">
+  
+  <nav>
+    <div class = "Logo" style ="display: flex; flex-direction: row;margin-top: 15px;">
+      <img src = "./assets/soundboardimg.png" alt = "Jules" style="height: 90px; width: 175px; margin-bottom: 25px;"><p style="
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 200;
+      font-size: 38px;
+      margin: 0px;
+      color: white;"></p>
+    </div>
+      <router-link to="/" style="margin-top: 20px;">
+      <div class ="myBox1"></div>
+      <svg height="19" viewBox="0 0 32 32" width="19" fill="white" xmlns="http://www.w3.org/2000/svg" id="fi_2549900"><g id="_9-Home" data-name="9-Home"><path d="m21.82 30h-11.64a5 5 0 0 1 -5.18-4.76v-6.24a1 1 0 0 1 2 0v6.24a3 3 0 0 0 3.18 2.76h11.64a3 3 0 0 0 3.18-2.76v-6.24a1 1 0 0 1 2 0v6.24a5 5 0 0 1 -5.18 4.76zm7.89-13.29a1 1 0 0 0 0-1.42l-13-13a1 1 0 0 0 -1.42 0l-13 13a1 1 0 0 0 1.42 1.42l12.29-12.3 12.29 12.3a1 1 0 0 0 1.42 0z"></path></g></svg>
+      Home  
+      </router-link>
+  
+    <router-link to="/board">
+      <svg id="fi_3158876" enable-background="new 0 0 512 512" height="19" viewBox="0 0 512 512" width="19" fill="white" xmlns="http://www.w3.org/2000/svg"><g><path d="m206.571 275.429h30v30h-30z"></path><path d="m221.571 137.714c-84.207 0-152.714 68.508-152.714 152.715h30c0-67.665 55.049-122.715 122.714-122.715z"></path><path d="m221.571 206.571c-46.239 0-83.857 37.618-83.857 83.857s37.618 83.857 83.857 83.857 83.857-37.618 83.857-83.857-37.617-83.857-83.857-83.857zm0 137.715c-29.697 0-53.857-24.16-53.857-53.857s24.16-53.857 53.857-53.857 53.857 24.16 53.857 53.857-24.159 53.857-53.857 53.857z"></path><path d="m512 0h-98.857v98.857h34.428v82.754l-20.954 24.552c-10.996-26.76-27.296-51.335-48.371-72.409-41.849-41.849-97.491-64.896-156.675-64.896s-114.825 23.048-156.674 64.896c-41.85 41.85-64.897 97.491-64.897 156.675s23.047 114.825 64.897 156.675c41.849 41.848 97.491 64.896 156.674 64.896 59.184 0 114.826-23.048 156.675-64.896 41.85-41.85 64.897-97.491 64.897-156.675 0-17.264-1.975-34.223-5.792-50.63l40.221-47.126v-93.816h34.428zm-98.857 290.429c0 105.633-85.939 191.571-191.572 191.571s-191.571-85.938-191.571-191.571 85.938-191.572 191.571-191.572c85.435 0 157.978 56.221 182.599 133.606l-73.59 86.225 22.819 19.475 58.596-68.656c.751 6.873 1.148 13.852 1.148 20.922zm68.857-221.572h-38.857v-38.857h38.857z"></path></g></svg>      
+      <div class ="myBox1"></div>
+      Board
+    </router-link>
+    <router-link to="/dash">
+      <svg xmlns="http://www.w3.org/2000/svg" id="fi_3097412" data-name="Layer 2" width="19" height="19" fill="white" viewBox="0 0 24 24"><path d="M22,13a1,1,0,0,0-1,1v4.213A2.79,2.79,0,0,1,18.213,21H5.787A2.79,2.79,0,0,1,3,18.213V14a1,1,0,0,0-2,0v4.213A4.792,4.792,0,0,0,5.787,23H18.213A4.792,4.792,0,0,0,23,18.213V14A1,1,0,0,0,22,13Z"></path><path d="M6.707,8.707,11,4.414V17a1,1,0,0,0,2,0V4.414l4.293,4.293a1,1,0,0,0,1.414-1.414l-6-6a1,1,0,0,0-1.414,0l-6,6A1,1,0,0,0,6.707,8.707Z"></path></svg>
+      <div class ="myBox1"></div>
+      Upload
+  
+    </router-link>
+    <router-link style="margin-top: auto; margin-bottom: 25px;" to="/settings" >
+    <svg id="fi_2099058" enable-background="new 0 0 512 512" height="19" viewBox="0 0 512 512" width="19" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="m272.066 512h-32.133c-25.989 0-47.134-21.144-47.134-47.133v-10.871c-11.049-3.53-21.784-7.986-32.097-13.323l-7.704 7.704c-18.659 18.682-48.548 18.134-66.665-.007l-22.711-22.71c-18.149-18.129-18.671-48.008.006-66.665l7.698-7.698c-5.337-10.313-9.792-21.046-13.323-32.097h-10.87c-25.988 0-47.133-21.144-47.133-47.133v-32.134c0-25.989 21.145-47.133 47.134-47.133h10.87c3.531-11.05 7.986-21.784 13.323-32.097l-7.704-7.703c-18.666-18.646-18.151-48.528.006-66.665l22.713-22.712c18.159-18.184 48.041-18.638 66.664.006l7.697 7.697c10.313-5.336 21.048-9.792 32.097-13.323v-10.87c0-25.989 21.144-47.133 47.134-47.133h32.133c25.989 0 47.133 21.144 47.133 47.133v10.871c11.049 3.53 21.784 7.986 32.097 13.323l7.704-7.704c18.659-18.682 48.548-18.134 66.665.007l22.711 22.71c18.149 18.129 18.671 48.008-.006 66.665l-7.698 7.698c5.337 10.313 9.792 21.046 13.323 32.097h10.87c25.989 0 47.134 21.144 47.134 47.133v32.134c0 25.989-21.145 47.133-47.134 47.133h-10.87c-3.531 11.05-7.986 21.784-13.323 32.097l7.704 7.704c18.666 18.646 18.151 48.528-.006 66.665l-22.713 22.712c-18.159 18.184-48.041 18.638-66.664-.006l-7.697-7.697c-10.313 5.336-21.048 9.792-32.097 13.323v10.871c0 25.987-21.144 47.131-47.134 47.131zm-106.349-102.83c14.327 8.473 29.747 14.874 45.831 19.025 6.624 1.709 11.252 7.683 11.252 14.524v22.148c0 9.447 7.687 17.133 17.134 17.133h32.133c9.447 0 17.134-7.686 17.134-17.133v-22.148c0-6.841 4.628-12.815 11.252-14.524 16.084-4.151 31.504-10.552 45.831-19.025 5.895-3.486 13.4-2.538 18.243 2.305l15.688 15.689c6.764 6.772 17.626 6.615 24.224.007l22.727-22.726c6.582-6.574 6.802-17.438.006-24.225l-15.695-15.695c-4.842-4.842-5.79-12.348-2.305-18.242 8.473-14.326 14.873-29.746 19.024-45.831 1.71-6.624 7.684-11.251 14.524-11.251h22.147c9.447 0 17.134-7.686 17.134-17.133v-32.134c0-9.447-7.687-17.133-17.134-17.133h-22.147c-6.841 0-12.814-4.628-14.524-11.251-4.151-16.085-10.552-31.505-19.024-45.831-3.485-5.894-2.537-13.4 2.305-18.242l15.689-15.689c6.782-6.774 6.605-17.634.006-24.225l-22.725-22.725c-6.587-6.596-17.451-6.789-24.225-.006l-15.694 15.695c-4.842 4.843-12.35 5.791-18.243 2.305-14.327-8.473-29.747-14.874-45.831-19.025-6.624-1.709-11.252-7.683-11.252-14.524v-22.15c0-9.447-7.687-17.133-17.134-17.133h-32.133c-9.447 0-17.134 7.686-17.134 17.133v22.148c0 6.841-4.628 12.815-11.252 14.524-16.084 4.151-31.504 10.552-45.831 19.025-5.896 3.485-13.401 2.537-18.243-2.305l-15.688-15.689c-6.764-6.772-17.627-6.615-24.224-.007l-22.727 22.726c-6.582 6.574-6.802 17.437-.006 24.225l15.695 15.695c4.842 4.842 5.79 12.348 2.305 18.242-8.473 14.326-14.873 29.746-19.024 45.831-1.71 6.624-7.684 11.251-14.524 11.251h-22.148c-9.447.001-17.134 7.687-17.134 17.134v32.134c0 9.447 7.687 17.133 17.134 17.133h22.147c6.841 0 12.814 4.628 14.524 11.251 4.151 16.085 10.552 31.505 19.024 45.831 3.485 5.894 2.537 13.4-2.305 18.242l-15.689 15.689c-6.782 6.774-6.605 17.634-.006 24.225l22.725 22.725c6.587 6.596 17.451 6.789 24.225.006l15.694-15.695c3.568-3.567 10.991-6.594 18.244-2.304z"></path><path d="m256 367.4c-61.427 0-111.4-49.974-111.4-111.4s49.973-111.4 111.4-111.4 111.4 49.974 111.4 111.4-49.973 111.4-111.4 111.4zm0-192.8c-44.885 0-81.4 36.516-81.4 81.4s36.516 81.4 81.4 81.4 81.4-36.516 81.4-81.4-36.515-81.4-81.4-81.4z"></path></svg>
+    <div class ="myBox1"></div>
+      Settings
+    </router-link>
+  
+  </nav>
   </div>
-  <HelloWorld msg="Vite + Vue" />
-  -->
-  <HomeView />
-</template>
+  <router-view :key="$route.fullPath" ></router-view>
+  </div>
+  </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+  
+  <style>
+  .myBox1 {
+    width: 7px;
+    height: 17px;
+    display: none; /* initially the box is hidden */
+    background-color: #5C43F5; /* or any color you want for the box */
+    box-shadow: 5px 0px 17px 6px rgba(92, 67, 245, 0.25);
+    border-radius: 15px;
+    position: absolute;
+    left: 10px;
+  }
+  nav a.router-link-exact-active .myBox1 {
+    display: block;
+  }
+  
+  #app{
+    margin: 0px;
+  }
+  
+  .container{
+    background-color: #15181E;
+    margin: 0px;
+    height: 100vh;
+    width: 220px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+  
+  
+  }
+  body{
+    margin:0;
+    background-color: #15181E;
+  }
+  
+  
+  nav {
+    background-color: #15181E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-decoration: none;
+    position: fixed;
+    z-index: -2;
+    user-select: none;
+    -webkit-user-select: none;
+    height: 100%;
+  }
+  
+  nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: 19px;
+    transition: ease-in-out 0.1s;
+    display: flex;
+    margin-left: 25px;
+    align-items: center;
+  
+  }
+  
+  nav a.router-link-exact-active {
+    color: #5C43F5;
+    text-decoration: none;
+    display: flex !important;
+  
+  }
+  nav a.router-link-exact-active svg{
+    fill: #5C43F5;
+  }
+  
+  svg{
+    margin-right: 25px;
+    margin-left: 20px;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 25px;
+    z-index: 1;
+  
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgba(78, 89, 109, 0.1);  
+    border-radius: 25px;
+  
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(78, 89, 109, 0.1);  
+    border-radius: 25px;
+  
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(89, 94, 102, 0.1);  
+    border-radius: 25px;
+  
+  }
+  </style>

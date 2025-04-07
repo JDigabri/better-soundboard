@@ -18,10 +18,8 @@ export function activateSoundboard() {
   const defaultMic = rows.find(r => r.Default === "Capture")["﻿Name"];
   const vbMic      = rows.find(r => r["Device Name"].includes("VB-Audio Virtual Cable") && r.Direction === "Capture")["﻿Name"];
 
-  // 1️⃣ Route physical mic into VB‑Cable
   execFileSync(SVV, ["/SetListenToThisDevice", defaultMic, "1"]);
 
-  // 2️⃣ Make VB‑Cable your default mic
   execFileSync(SVV, ["/SetDefault", vbMic, "all"]);
 
   previousState = { previousMic: defaultMic };
@@ -31,9 +29,7 @@ export function activateSoundboard() {
 export function restoreSoundboard(prev) {
   const mic = prev?.previousMic;
   if (mic) {
-    // Disable mic → VB‑Cable routing
     execFileSync(SVV, ["/SetListenToThisDevice", mic, "0"]);
-    // Restore your original mic as default
     execFileSync(SVV, ["/SetDefault", mic, "all"]);
   }
   return prev;
