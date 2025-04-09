@@ -18,3 +18,10 @@ contextBridge.exposeInMainWorld('audioAPI', {
     });
   }
 });
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  close: () => ipcRenderer.invoke('close-app'),
+  minimize: () => ipcRenderer.invoke('minimize-app'),
+  maximize: () => ipcRenderer.invoke('maximize-app'),
+  isMaximized: () => ipcRenderer.invoke('is-maximized-app'),
+});
