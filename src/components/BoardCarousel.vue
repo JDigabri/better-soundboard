@@ -10,7 +10,7 @@
     <div class="carousel" ref="carousel">
       <div v-for="(item, index) in items" :key="index" class="carousel-item">
         <img :src="item.img" alt="cover" class="cover-art" />
-        <p class="title">{{ item.title }}</p>
+        <p class="title" style="font-weight: 200;">{{ item.title }}</p>
         <p class="artist">{{ item.artist }}</p>
       </div>
     </div>
@@ -108,11 +108,14 @@ export default {
   /* No background color so it stays transparent */
   transition: width 0.2s ease-in-out;
   overflow: hidden;
+  z-index: 5;
 }
 .title-container {
     width: 900px !important;
     margin-left: 165px;
     margin-bottom: 10px;
+    z-index: 5;
+    transition: width 0.2s ease-in-out;
 }
 /* The horizontally scrollable area */
 .carousel {

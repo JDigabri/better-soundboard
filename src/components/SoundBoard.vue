@@ -43,7 +43,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="main">
     <div class="switch-section">
       <SoundButton />
     </div>
@@ -54,37 +53,31 @@ onMounted(async () => {
         :soundName="sound"
       />
     </div>
-  </div>
 </template>
 
 <style scoped>
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-}
+
 .switch-section {
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: start;
-  width: 96vw;
+  width: 600px;
   margin-top: 10px;
   padding: 5px;
+  z-index: 5;
 }
 .board {
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: start;
-  width: 96vw;
+  width: 600px;
   margin-top: 10px;
   padding: 5px;
   gap: 15px;
   flex-wrap: wrap;
+  z-index: 5;
 }
 </style>
