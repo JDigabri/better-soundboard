@@ -1,7 +1,16 @@
 <template>
   <div class="options-menu">
     <div class="options-list">
-      <button v-for="option in options" :key="option" @click="selectOption(option)">
+      <div class="profile-banner">
+        <img class="profile-image" src="" alt="Profile" />
+        <p class="profile-name">Owais Hobbi</p>
+      </div>
+      <button
+        v-for="option in options"
+        :key="option"
+        @click="selectOption(option)"
+        :class="{ selected: selectedOption === option }"
+      >
         {{ option }}
       </button>
     </div>
@@ -34,16 +43,11 @@ export default {
   computed: {
     currentModule() {
       switch (this.selectedOption) {
-        case "Dashboard":
-          return "DashboardModule";
-        case "Analytics":
-          return "AnalyticsModule";
-        case "Upload":
-          return "UploadModule";
-        case "Send Feedback":
-          return "FeedbackModule";
-        default:
-          return null;
+        case "Dashboard": return "DashboardModule";
+        case "Analytics": return "AnalyticsModule";
+        case "Upload": return "UploadModule";
+        case "Send Feedback": return "FeedbackModule";
+        default: return null;
       }
     },
   },
@@ -63,27 +67,63 @@ export default {
   width: 900px;
   margin-left: 170px;
 }
+
 .options-list {
   display: flex;
   flex-direction: column;
   margin-right: 20px;
+  background-color: rgba(78, 89, 109, 0.10); /* 10% */
+  width: 250px;
+  border-radius: 8px;
 }
+
+.profile-banner {
+  display: flex;
+  align-items: center;
+  background-color: rgba(78, 89, 109, 0.20); /* 20% */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.profile-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-name {
+  color: white;
+  font-weight: 500;
+}
+
 .options-list button {
   margin-bottom: 10px;
   padding: 10px;
-  background-color: red;
+  background-color: transparent;
   color: white;
   border: none;
+  text-align: left;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border-radius: 6px;
 }
+
 .options-list button:hover {
-  background-color: #5C43F5;
+  background-color: rgba(92, 67, 245, 0.2);
 }
+
+.options-list button.selected {
+  background-color: #15181E;
+  border-radius: 0px;
+}
+
 .menu-display {
   background-color: #242424;
   color: white;
   border-radius: 5px;
   width: 100%;
+  padding: 20px;
 }
-</style> 
+</style>
