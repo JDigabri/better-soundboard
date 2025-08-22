@@ -61,88 +61,63 @@ export default {
 </script>
 
 <style scoped>
-* {
-  overflow-y: hidden;
-}
+/* predictable sizing */
+*, *::before, *::after { box-sizing: border-box; }
+* { overflow-y: hidden; }
+
+/* Fills the parent (the same container your main card uses) */
 .about {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-  text-align: start;
   font-family: "Inter", sans-serif;
   font-weight: 100;
   font-size: 22px;
   color: white;
-  position: relative;
-  z-index: 11;
-  margin-left: 165px;
-  margin-top: 20px;
-  width: 900px !important;
-  transition: width 0.2s ease-in-out; /* Transition the width property */
-  cursor: not-allowed;
+
+  /* IMPORTANT: let the parent control horizontal space */
+  margin: 20px 0 0;          /* remove manual left offset */
+  width: 100%;               /* fill parent width immediately */
+  max-width: 100%;           /* no internal cap */
 }
 
-.searchTextArea {
-  width: 350px;
-  height: 90px;
-
-  margin-left: 15px;
-}
-.searchTextArea > p {
-  font-family: "Inter", sans-serif;
-  font-weight: 200;
-  margin: 0px;
-}
-.searchInput {
-  width: -webkit-fill-available;
-  height: 48px;
-}
-a {
-  text-decoration: none;
-  color: white;
-}
-svg {
-  margin: 0px;
-}
-input {
-  color: rgba(255, 255, 255, 0.1);
-}
-input:focus {
-  outline: none;
-  box-shadow: none;
-  color: white;
-}
-
+/* Search row: fixed height, stretches horizontally */
 .search {
-  width: -webkit-fill-available;
-  height: 48px;
-  background: rgba(78, 89, 109, 0.1);
-  border-radius: 5px;
   display: flex;
   align-items: center;
+  gap: 8px;
+
+  height: 48px;              /* lock height */
+  width: 100%;               /* stretch to match main card */
+  background: rgba(78, 89, 109, 0.1);
+  border-radius: 5px;
   color: rgba(255, 255, 255, 0.1);
 }
 
-@media (min-width: 1500px) {
-  .about {
-    width: 1100px !important;
-    margin-left: 220px;
-  }
-}
+/* icon */
+svg { margin: 0; }
 
-@media (min-width: 1700px) {
-  .about {
-    width: 1375px !important;
-    margin-left: 207.5px;
-  }
-}
-
+/* input wrapper takes remaining space */
 .input-container {
   position: relative;
-  width: -webkit-fill-available;
+  flex: 1 1 auto;
+  min-width: 0;              /* allow proper shrinking */
 }
 
+/* input stays same height; no vertical scaling */
+.searchInput {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 16px;
+  background: none;
+  border: none;
+  margin-left: 15px;
+}
+.searchInput:focus { outline: none; box-shadow: none; color: white; }
+input { color: rgba(255, 255, 255, 0.1); }
+
+/* dynamic placeholder sits on top until typing */
 .placeholder-text {
   position: absolute;
   left: 15px;
@@ -150,21 +125,22 @@ input:focus {
   transform: translateY(-50%);
   pointer-events: none;
   color: rgba(255, 255, 255, 0.1);
-  font-size: 18px;
+  font-size: 16px;           /* match input */
 }
 
+/* slide animation */
 .slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.2s ease;
-}
+.slide-up-leave-active { transition: all 0.2s ease; }
+.slide-up-enter { transform: translateY(20px); opacity: 0; }
+.slide-up-leave-to { transform: translateY(-20px); opacity: 0; }
 
-.slide-up-enter {
-  transform: translateY(20px);
-  opacity: 0;
-}
+/* optional: if you DON'T use the global .main wrapper,
+   uncomment the block below to self-offset for a 220px sidebar:
 
-.slide-up-leave-to {
-  transform: translateY(-20px);
-  opacity: 0;
+.about {
+  --sidebar-w: 220px;
+  margin-left: var(--sidebar-w);
+  width: calc(100vw - var(--sidebar-w));
 }
+*/
 </style>

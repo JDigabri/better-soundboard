@@ -10,7 +10,7 @@ import ManySound from "../components/ManySound.vue";
     <LargeBoard />
     <BoardCarousel />
     <ManySound />
-    <SoundBoard style="margin-left: 220px" />
+    <SoundBoard />
   </div>
 </template>
 
@@ -29,13 +29,7 @@ div {
 .home {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow-x: hidden;
-  overflow-y: hidden;
+
   margin-top: 30px;
 }
 .button {

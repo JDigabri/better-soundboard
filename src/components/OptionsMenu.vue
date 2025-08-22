@@ -2,7 +2,7 @@
   <div class="options-menu">
     <div class="options-list">
       <div class="profile-banner">
-        <img class="profile-image" src="" alt="Profile" />
+        <img class="profile-image" src="../assets/OW.png" alt="Profile" />
         <p class="profile-name">Owais Hobbi</p>
       </div>
       <button
@@ -11,6 +11,7 @@
         @click="selectOption(option)"
         :class="{ selected: selectedOption === option }"
       >
+        <img :src="getIconPath(option)" :alt="option" class="option-icon" />
         {{ option }}
       </button>
     </div>
@@ -55,6 +56,15 @@ export default {
     selectOption(option) {
       this.selectedOption = option;
     },
+    getIconPath(option) {
+      switch (option) {
+        case "Dashboard": return "src/assets/dashboard.svg";
+        case "Analytics": return "src/assets/analytics.svg";
+        case "Upload": return "src/assets/cloud-computing.svg";
+        case "Send Feedback": return "src/assets/feedback.svg";
+        default: return "";
+      }
+    },
   },
 };
 </script>
@@ -66,6 +76,7 @@ export default {
   height: 500px;
   width: 900px;
   margin-left: 170px;
+  font-family: 'Inter', sans-serif;
 }
 
 .options-list {
@@ -73,17 +84,19 @@ export default {
   flex-direction: column;
   margin-right: 20px;
   background-color: rgba(78, 89, 109, 0.10); /* 10% */
-  width: 250px;
+  width: 450px;
   border-radius: 8px;
+  height: fit-content;
+
 }
 
 .profile-banner {
   display: flex;
   align-items: center;
   background-color: rgba(78, 89, 109, 0.20); /* 20% */
-  padding: 10px;
   border-radius: 8px;
   margin-bottom: 15px;
+  padding-left: 15px;
 }
 
 .profile-image {
@@ -91,16 +104,17 @@ export default {
   height: 32px;
   border-radius: 50%;
   margin-right: 10px;
+  border: 1px solid #266DD3;
 }
 
 .profile-name {
   color: white;
-  font-weight: 500;
+  font-weight: 200;
+  font-size: 20px;
 }
 
 .options-list button {
-  margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px;
   background-color: transparent;
   color: white;
   border: none;
@@ -108,6 +122,10 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 6px;
+  font-size: 16px;
+  font-weight: 100;
+  display: flex;
+  align-items: center;
 }
 
 .options-list button:hover {
@@ -119,11 +137,16 @@ export default {
   border-radius: 0px;
 }
 
+.option-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  filter: brightness(0) invert(1);
+}
+
 .menu-display {
-  background-color: #242424;
   color: white;
-  border-radius: 5px;
   width: 100%;
-  padding: 20px;
+
 }
 </style>

@@ -1,207 +1,190 @@
 <template>
-  <!-- Outer container with sizing constraints -->
-  <div class="profile-container">
-    <!-- Profile header with a blurred background (like the .Purchase div) -->
-    <div
-      class="blurred-bg-behind"
-      :style="{ backgroundImage: `url(${backgroundUrl})` }"
-    ></div>
-    <div class="profile-header">
-      <!-- Blurred background layer -->
+  <div class="profile-wrap">
+    <div class="board-card">
+      <div class="card-bg" :style="{ backgroundImage: `url(${backgroundUrl})` }"></div>
 
-      <div
-        class="blurred-bg"
-        :style="{ backgroundImage: `url(${backgroundUrl})` }"
-      ></div>
+      <div class="card-content">
+        <!-- LEFT: avatar scales with the card’s min-height -->
+        <img class="avatar" :src="profilePicture" alt="Profile picture" />
 
-      <!-- Foreground content (profile picture, name, stats) -->
-      <div class="foreground-content">
-        <div class="profile-picture-wrapper">
-          <img :src="profilePicture" alt="Profile Picture" />
+        <!-- RIGHT: frosted info -->
+        <div class="info">
+          <div class="info-inner">
+            <div class="label">Profile</div>
+            <h1 class="name" :title="userName">{{ userName }}</h1>
+
+            <div class="meta">
+              <span class="pill">
+                {{ soundBoardCount }} Sound Board<span v-if="soundBoardCount !== 1">s</span>
+              </span>
+              <span class="dot" aria-hidden="true">•</span>
+              <span class="pill">{{ soundsCount }} Sounds</span>
+            </div>
+
+            <p v-if="bio" class="bio">{{ bio }}</p>
+            <div class="actions"><slot name="actions" /></div>
+          </div>
         </div>
-        <div class="profile-info">
-          <p class="profile-label">Profile</p>
-          <h1 class="profile-name">{{ userName }}</h1>
-          <p class="profile-stats">
-            {{ soundBoardCount }} Sound Board, {{ soundsCount }} Sounds
-          </p>
-        </div>
-      </div>
-    </div>
+      </div><!-- /card-content -->
+    </div><!-- /board-card -->
   </div>
 </template>
 
 <script>
 export default {
-  name: "ProfileHeader",
+  name: 'ProfileBoardCard',
   props: {
-    /* Background image for the header */
     backgroundUrl: {
       type: String,
       default:
-        "https://pbs.twimg.com/profile_images/843289621102575618/adYB0YVe_400x400.jpg",
+        'https://pbs.twimg.com/profile_images/843289621102575618/adYB0YVe_400x400.jpg',
     },
-    /* Profile picture URL */
     profilePicture: {
       type: String,
       default:
-        "https://pbs.twimg.com/profile_images/843289621102575618/adYB0YVe_400x400.jpg",
+        'https://pbs.twimg.com/profile_images/843289621102575618/adYB0YVe_400x400.jpg',
     },
-    /* User display name */
-    userName: {
-      type: String,
-      default: "Owais Hobbi",
-    },
-    /* Number of sound boards */
-    soundBoardCount: {
-      type: Number,
-      default: 33,
-    },
-    /* Number of sounds */
-    soundsCount: {
-      type: Number,
-      default: 452,
-    },
+    userName: { type: String, default: 'Owais Hobbi' },
+    soundBoardCount: { type: Number, default: 33 },
+    soundsCount: { type: Number, default: 452 },
+    bio: { type: String, default: '' },
   },
 };
 </script>
 
 <style scoped>
-/* Outer container sizing based on your provided constraints */
-.profile-container {
-  width: 900px !important;
-  margin-left: 165px;
-  height: 275px; /* Adjust height as needed */
-  margin-bottom: 25px;
-  transition: width 0.2s ease-in-out;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-/* Media query adjustments */
-@media (min-width: 1500px) {
-  .profile-container {
-    width: 1100px !important;
-    margin-left: 220px;
-  }
-  .blurred-bg-behind {
-    position: absolute;
-    height: 100px; /* Adjust height as needed */
-    width: 950px !important;
-    background-position: center;
-    filter: blur(100.5px) brightness(100%);
-    z-index: 1;
-    align-self: center;
-    margin-top: 250px;
-  }
-}
-
-@media (min-width: 1700px) {
-  .profile-container {
-    width: 1375px !important;
-    height: 375px; /* Adjust height as needed */
-
-    margin-left: 207.5px;
-  }
-  .blurred-bg-behind {
-    width: 1175px !important;
-    margin-left: 100px !important;
-  }
-  .profile-picture-wrapper {
-    width: 325px !important;
-    height: 325px !important;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-}
-
-/* Profile header with blurred background (similar to .Purchase) */
-.profile-header {
-  position: relative;
-  height: 100%; /* Adjust height as needed */
-  border-radius: 25px 25px 0 0;
-  overflow: hidden; /* Clips the blur to the rounded corners */
-  z-index: 99;
-}
-
-/* Blurred background layer */
-.blurred-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Full-width wrapper: NO max-widths; spacing only */
+.profile-wrap {
   width: 100%;
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+  margin: 2rem auto;
+}
+
+/* The card is the scaler: its font-size grows with viewport,
+   and all sizes use em, so the whole layout scales from here. */
+.board-card {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(17, 20, 26, 0.6);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  /* global scaler (no max-widths anywhere) */
+  font-size: clamp(12px, 0.95vw + 0.25rem, 18px);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* blurred backplate */
+.card-bg {
+  position: absolute;
+  inset: 0;
   background-size: cover;
-  filter: blur(25.5px) brightness(70%);
-  clip-path: inset(0 0 0 0 round 0px);
+  background-position: center;
+  filter: blur(22px) brightness(0.9) saturate(1.1);
+  transform: scale(1.12);
   z-index: 0;
 }
-.blurred-bg-behind {
-  position: absolute;
-  height: 100px; /* Adjust height as needed */
-  width: 750px;
-  background-position: center;
-  filter: blur(100.5px) brightness(100%);
-  z-index: 1;
-  align-self: center;
-  margin-top: 250px;
-  margin-left: 75px;
-}
 
-/* Foreground content layered above the background */
-.foreground-content {
+/* Grid: avatar column (in em so it scales with font-size) | info */
+.card-content {
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding-left: 20px;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: clamp(14em, 18em, 22em) 1fr;
+  gap: 1em;
+  padding: 1em;
+
+  /* Card height also from font-size, no vw/px: roughly ≈ 275 → 380px at your clamp ends */
+  min-height: clamp(18em, 21em, 24em);
+
+  align-items: stretch; /* avatar = info height */
+  min-width: 0;
 }
 
-/* Profile picture */
-.profile-picture-wrapper {
-  width: 230px;
-  height: 230px;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.profile-picture-wrapper img {
+/* Avatar fills left column; square by aspect-ratio */
+.avatar {
   width: 100%;
   height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  border-radius: 0.9em;
+  box-shadow: 0 0.25em 1em rgba(0,0,0,0.35);
+  display: block;
 }
 
-/* Profile text styling */
-.profile-info {
+/* Frosted info panel */
+.info {
+  display: flex;
+  border-radius: 0.9em;
+  color: #e9edf6;
+  overflow: hidden;
+  backdrop-filter: blur(10px) saturate(1.2);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.info-inner {
   display: flex;
   flex-direction: column;
-  color: white;
-  line-height: 1.3;
-  text-align: left;
-  font-family: "Inter", sans-serif;
+  gap: 0.6em;
+  padding: 1em 1.1em;
+  min-width: 0;
+  justify-content: center;
 }
 
-.profile-label {
+/* Typography all relative to card font-size (em) */
+.label {
+  font-size: 0.9em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(233,237,246,0.85);
   margin: 0;
-  font-size: 14px;
-  font-weight: 300;
-  opacity: 0.5;
 }
 
-.profile-name {
-  margin: 5px 0;
-  font-size: 32px;
+.name {
+  margin: 0;
   font-weight: 700;
+  font-size: clamp(1.3em, 1.6em, 1.9em);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
 }
 
-.profile-stats {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 200;
-  opacity: 0.5;
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.35em 0.65em;
+  font-size: 0.95em;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #dbe3f3;
+}
+.dot { opacity: 0.6; user-select: none; }
+
+.bio {
+  margin: 0.2em 0 0;
+  font-size: 1em;
+  line-height: 1.35;
+  color: #d7def1;
+  opacity: 0.95;
+}
+
+.actions {
+  margin-top: 0.2em;
+  display: inline-flex;
+  gap: 0.6em;
 }
 </style>

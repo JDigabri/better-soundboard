@@ -1,356 +1,195 @@
 <template>
-  <div style="margin-bottom: 25px;width: 100vw; ">
-    <div class="slider">
-      <div
-        class="home"
-        :style="{
-          backgroundImage: `url(https://assetsio.gnwcdn.com/hades-artwork.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp)`,
-        }"
-        style="
-          filter: blur(50.5px) brightness(100%);
-          position: absolute;
-          z-index: 0;
-        "
-      ></div>
+  <div class="board-wrap">
+    <div class="board-card">
+      <div class="card-bg" :style="{ backgroundImage: `url(${artUrl})` }"></div>
 
-      <div
-        class="home"
-        :style="{
-          backgroundImage: `url(https://cdn1.epicgames.com/min/offer/2560x1440-2560x1440-5e710b93049cbd2125cf0261dcfbf943.jpg)`,
-        }"
-        style="position: relative; z-index: 1"
-      ></div>
-      <div class="stacked">
-        <div class="outer" style="position: absolute">
-          <div
-            class="Purchase"
-            :style="{
-              backgroundImage: `url(https://assetsio.gnwcdn.com/hades-artwork.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp)`,
-            }"
-            style="
-              background: rgba(52, 58, 68, 0);
-              position: absolute;
-              top: 0px;
-              z-index: 1;
-            "
-          >
-            <div
-              class="textArea"
-              style="position: relative; z-index: 1; height: 100%"
-            >
-              <p class="song-title">
-              Hades Sound Board
-              </p>
-              
-              <div class="songList">
-                <div
-                  v-for="n in 5"
-                  :key="n"
-                  :style="{
-                    borderBottom: n !== 5 ? '1px solid #00000010' : 'none',
+      <div class="card-content">
+        <!-- LEFT: cover art matches list height -->
+        <img class="art" :src="artUrl" alt="Album art" />
 
-                  }"
-                  class="sounds"
-                >
-                  <p style="margin-left: 20px" class="song-duration">
-                    <div class="song-number-wrapper">
+        <!-- RIGHT: frosted list -->
+        <div class="list">
+          <div class="list-header">Hades Sound Board</div>
 
-                    <span class="song-number">{{`${n}. `}}</span>
-                    <span class="play-icon">
-                        <svg id="fi_727245" fill="white" enable-background="new 0 0 320.001 320.001" viewBox="0 0 320.001 320.001" xmlns="http://www.w3.org/2000/svg"><path d="m295.84 146.049-256-144c-4.96-2.784-11.008-2.72-15.904.128-4.928 2.88-7.936 8.128-7.936 13.824v288c0 5.696 3.008 10.944 7.936 13.824 2.496 1.44 5.28 2.176 8.064 2.176 2.688 0 5.408-.672 7.84-2.048l256-144c5.024-2.848 8.16-8.16 8.16-13.952s-3.136-11.104-8.16-13.952z"></path><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>                    </span>
-                    </div>
-
-                        <span style="margin-left: 10px">Johnny is Bad at Rust</span>
-                  </p>
-                  <p style="margin-left: 20px">Ephis</p>
-                  <p style="margin-right: 20px">
-                    <span class="number">{{`${n}:0${n}`}}</span>
-                  </p>
-                </div>
+          <div class="rows">
+            <div class="row" v-for="(s, i) in songs" :key="i">
+              <div class="title">
+                <!-- number + play occupy same width; swap on hover -->
+                <span class="num">{{ i + 1 }}.</span>
+                <span class="play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </span>
+                <span class="name">{{ s.title }}</span>
               </div>
+              <div class="artist">{{ s.artist }}</div>
+              <div class="dur">{{ s.duration }}</div>
             </div>
           </div>
-          <div
-            class="Purchase"
-            :style="{
-              backgroundImage: `url(https://assetsio.gnwcdn.com/hades-artwork.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp)`,
-            }"
-            style="
-              filter: blur(25.5px) brightness(90%);
-              clip-path: inset(0 0 0 0 round 25px);
-            "
-          ></div>
         </div>
-      </div>
-    </div>
+      </div><!-- /card-content -->
+    </div><!-- /board-card -->
   </div>
 </template>
 
+<script>
+export default {
+  name: 'HadesBoardCard',
+  data() {
+    return {
+      artUrl:
+        'https://assetsio.gnwcdn.com/hades-artwork.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp',
+      songs: [
+        { title: 'Johnny is Bad at Rust', artist: 'Ephis', duration: '2:02' },
+        { title: 'Ephis is Bad at Rust',  artist: 'Jibar', duration: '0:01' },
+        { title: 'DA is Bad at Rust',     artist: 'DPA',   duration: '1:03' },
+        { title: 'Emre is Bad at Rust',   artist: 'Ephis', duration: '2:52' },
+        { title: 'Owais is fat',          artist: 'Ephis', duration: '4:09' },
+      ],
+    };
+  },
+};
+</script>
+
 <style scoped>
-.images {
-  position: relative;
-  margin-top: 275px;
-  display: flex;
-  margin-left: 15px;
-  flex-direction: row;
-  border-radius: 25px;
-  gap: 10px;
-}
-.image {
-  border-radius: 15px;
-}
-.home {
-  margin-top: 25px;
-  background-color: #4e596d10;
-  background-position: 0px;
-  display: flex;
-  flex-direction: column;
-  background-size: 150% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 285px !important;
-  height: 270px !important;
-  border-radius: 25px;
-  transition: transform 0.2s;
-  transition: width 0.2s ease-in-out; /* Transition the width property */
-  transition: all 0.2s ease-in-out;
-}
-
-.home:hover {
-  background-size: 155% 105% !important;
-  transition: all 0.2s ease-in;
-}
-.songList {
-  background: rgba(112, 125, 148, 0.3);
+/* wrapper: fills whatever width the page gives it */
+.board-wrap {
   width: 100%;
-  height: 308.333px;
-  border-radius: 25px;
-  margin-top: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 15px;
-  font-family: "Inter", sans-serif;
-  font-weight: 100;
-  display: flex;
-  flex-direction: column;
-  padding-right: 0px;
-}
-.sounds{
-    height: 20%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 17px;
-    font-family: "Inter", sans-serif;
-    font-weight: 100;
-    overflow-y: hidden;
-}
-.song-duration{
-    display: flex;
-    align-items: center;
-}
-.song-title{
-    font-size: 18px;
-    margin-left: 15px;
-    font-weight: 300;
-    margin-block-end: 0px;
-    overflow-y: hidden;
-    margin-bottom: 10px;
-    height: 30px;
-}
-@media (min-width: 1500px) {
-  .home {
-    width: 340px !important;
-    height: 325px !important;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .home:hover {
-    transition: all 0.2s ease-in;
-  }
-  .Purchase {
-    height: 325px !important;
-    width: 745px !important;
-  }
-  .slider {
-    margin-right: 540px !important;
-  }
-  .sounds{
-    font-size: 19px;
-    font-weight: 200;
-}
-.song-title{
-    font-size: 21px;
-
-}
-#fi_727245{
-  height: 16px;
-  width: 16px;
-}
-}
-
-@media (min-width: 1700px) {
-    .sounds{
-    font-size: 22px;
-    font-weight: 200;
-}
-  .home {
-    width: 370px !important;
-    height: 370px !important;
-    transition: height 0.2s ease-in-out; /* Transition the width property */
-    background-size: 150% 100% !important;
-    transition: all 0.2s ease-in-out;
-  }
-  .home:hover {
-    background-size: 155% 105% !important;
-    cursor: pointer;
-    transition: all 0.2s ease-in;
-  }
-  .Purchase {
-    height: 370px !important;
-    width: 990px !important;
-  }
-  #imagecontainer {
-    max-height: 120px !important;
-    max-width: 122px !important;
-  }
-  .images {
-    margin-top: 325px !important;
-  }
-  .textArea {
-    height: 100% !important;
-    font-size: 10px !important;
-  }
-  .prices {
-    margin-top: 75px !important;
-  }
-  .slider {
-    margin-right: 797.5px !important;
-    
-}
-
-.song-title{
-    font-size: 24px;
-    margin-left: 15px;
-    margin-top: 20px;
-    font-weight: 300;
-    margin-block-end: 0px;
-}
-
-#fi_727245{
-  height: 16px !important;
-  width: 16px !important;
-}
-}
-.slider {
-  display: flex; 
-  justify-content: center;
-  margin-right: 450px;
-
-}
-.Purchase {
+  margin: 0 auto 25px;
   margin-top: 25px;
-  border-radius: 10px;
-  margin-left: 15px;
-  height: 270px;
-  width: 600px;
-  transition: all 0.2s ease-in;
-
 }
-.textArea {
+
+/* card: no max-width; everything scales off font-size + clamp()s */
+.board-card {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(17, 20, 26, 0.6);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  /* global scaler for this component */
+  font-size: clamp(14px, 1vw + 0.25rem, 20px);
+}
+
+/* blurred backplate */
+.card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(22px) brightness(0.9) saturate(1.1);
+  transform: scale(1.12);
+  z-index: 0;
+}
+
+/* 2-column grid; uses clamp so the art column grows/shrinks smoothly */
+.card-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: clamp(14em, 26vw, 22em) 1fr; /* left art | right list */
+  gap: 1em;
+  padding: 0.9em;
+  align-items: stretch; /* makes art and list equal height */
+}
+
+/* cover art exactly the height of the list */
+.art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.9em;
+  box-shadow: 0 0.25em 1em rgba(0,0,0,0.35);
+  display: block;
+}
+
+/* frosted list */
+.list {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  border-radius: 4px;
-  color: white;
-  font-family: "Inter", sans-serif;
+  border-radius: 0.9em;
+  color: #e9edf6;
+  overflow: hidden; /* tidy corners */
+  backdrop-filter: blur(10px) saturate(1.2);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
-a {
-  text-decoration: none;
-  color: white;
-  font-size: 10px;
-  font-family: "Inter", sans-serif;
-  font-weight: 200;
-}
-.home > .textArea > span {
-  margin-left: 25px;
-  color: white;
-  font-size: 11px;
-  font-family: "Inter", sans-serif;
-  width: 300px;
+/* header */
+.list-header {
+  padding: 0.7em 1em;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-#imgs {
-  width: 250%;
-  height: 200%;
-}
+/* rows define the card's height; art follows via align-items:stretch */
+.rows { display: grid; }
 
-#imagecontainer {
-  max-height: 100px;
-  max-width: 110px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  display: flex;
-  justify-content: center;
+.row {
+  display: grid;
+  grid-template-columns: 1fr clamp(8em, 14vw, 10em) clamp(3.5em, 6vw, 4.5em); /* title | artist | time */
   align-items: center;
+  gap: 1em;
+  padding: 0.65em 1em;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: rgba(255,255,255,0.06); }
+
+/* title cell with hover swap: number -> play icon */
+.title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0; /* enable ellipsis */
 }
 
-.tagCont {
-  display: flex;
-  margin-left: 15px;
-  font-family: "Inter", sans-serif;
-  font-weight: 200;
-  font-size: 15px;
+/* reserve exact width so no layout jump when swapping */
+.num, .play {
+  width: 1.5em;          /* keeps column width stable */
+  flex: 0 0 1.5em;
+  display: inline-flex;
+  justify-content: center;
+  color: #c9d1e6;
+  opacity: 0.85;
+}
+.play { display: none; }
+.row:hover .num { display: none; }
+.row:hover .play { display: inline-flex; }
+
+.play svg {
+  width: 0.9em;
+  height: 0.9em;
+  fill: currentColor;
 }
 
-.tag {
-  padding: 7px;
-  background-color: rgba(0, 0, 0, 0.3);
-  margin-right: 5px;
-  border-radius: 25px;
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.sounds .play-icon {
-    display: none;
-
+/* artist + duration */
+.artist {
+  color: #c9d1e6;
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.sounds svg{
-    margin: 0px;
-}
-.sounds:hover .play-icon {
-    display: inline-block;
-}
-.sounds:hover .song-icon {
-  display: inline-block;
-
-}
-.sounds:hover .song-number {
-  display: none;
-}
-.sounds:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.dur {
+  color: #dbe3f3;
+  text-align: right;
+  white-space: nowrap;
 }
 
-.song-number-wrapper {
-  display: inline-block;
-  width: 20px;
-}
-.song-title .song-icon {
-  display: none;
-  vertical-align: middle;
-}
-.song-title:hover .song-icon {
-  display: inline-block;
-}
-.song-title:hover .song-number {
-  display: none;
-}
-
-#fi_727245{
-  height: 12px;
-  width: 12px;
+/* responsive: stack on very narrow screens but still scale */
+@media (max-width: 820px) {
+  .card-content { grid-template-columns: 1fr; }
+  .art { height: auto; aspect-ratio: 1/1; max-width: 28em; margin-inline: auto; }
 }
 </style>
